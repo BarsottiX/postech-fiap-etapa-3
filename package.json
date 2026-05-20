@@ -1,0 +1,45 @@
+{
+  "name": "postech-fiap-etapa-2",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "postech-fiap-etapa-2",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "cross-env NODE_OPTIONS=--experimental-vm-modules jest",
+    "test:coverage": "cross-env NODE_OPTIONS=--experimental-vm-modules jest --coverage"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/danflavio/postech-fiap-etapa-2.gitls.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/danflavio/postech-fiap-etapa-2.gitls/issues"
+  },
+  "homepage": "https://github.com/danflavio/postech-fiap-etapa-2.gitls#readme",
+  "dependencies": {
+    "dotenv": "^17.3.1",
+    "express": "^5.2.1",
+    "pg": "^8.20.0"
+  },
+  "devDependencies": {
+    "cross-env": "^10.1.0",
+    "jest": "^30.3.0",
+    "supertest": "^7.2.2"
+  },
+  "jest": {
+    "transform": {},
+    "collectCoverage": true,
+    "coverageThreshold": {
+      "global": {
+        "branches": 50,
+        "functions": 50,
+        "lines": 50,
+        "statements": 50
+      }
+    }
+  }
+}

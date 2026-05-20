@@ -1,0 +1,23 @@
+# Dependências (reproduzíveis via npm install)
+node_modules/
+
+# Relatórios de Testes
+coverage/
+*.lcov
+
+# Variáveis de ambiente e Segredos (Segurança Crítica)
+.env
+.env.local
+
+# Docker e Logs
+npm-debug.log*
+.docker-data/
+pgdata/
+
+# Arquivos de sistema (Junk files)
+.DS_Store
+Thumbs.db
+
+# Pastas de build (caso use compiladores no futuro)
+dist/
+build/

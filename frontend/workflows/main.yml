@@ -1,0 +1,60 @@
+name: CI/CD Pipeline - Tech Challenge Fase 2
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  test-and-build:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_USER: user
+          POSTGRES_PASSWORD: password
+          POSTGRES_DB: blogging_db
+        ports:
+          - 5432:5432
+
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Instalar dependências
+        run: npm install
+      
+      - name: Inicializar Banco de Dados
+        run: |
+          PGPASSWORD=password psql -h localhost -U user -d blogging_db -f init.sql
+
+      - name: Executar Testes de Integração e Cobertura
+
+        run: npm run test:coverage
+        env:
+
+          DB_HOST: localhost
+          DB_USER: user
+          DB_PASSWORD: password
+          DB_NAME: blogging_db
+          DB_PORT: 5432
+          PORT: 3000
+
+      - name: Build Docker Image
+
+        run: docker build -t tech-challenge-app-etapa-2 .
