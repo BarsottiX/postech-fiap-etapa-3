@@ -2,11 +2,14 @@ services:
   app:
     build: .
     container_name: tech_challenge_app_etapa_3
+
     ports:
       - "${PORT:-3000}:${PORT:-3000}"
+
     volumes:
       - .:/app
       - /app/node_modules
+
     environment:
       - PORT=${PORT:-3000}
       - DB_HOST=db
@@ -15,28 +18,35 @@ services:
       - DB_NAME=${DB_NAME:-blogging_db}
       - DB_PORT=5432
       - NODE_ENV=development
+
     depends_on:
       db:
         condition: service_healthy
+
     networks:
       - tech_net
 
   db:
     image: postgres:15-alpine
     container_name: tech_challenge_db
+
     environment:
       POSTGRES_USER: ${DB_USER:-user}
       POSTGRES_PASSWORD: ${DB_PASSWORD:-password}
       POSTGRES_DB: ${DB_NAME:-blogging_db}
+
     volumes:
-      - postech-fiap-etapa-2-master_pgdata:/var/lib/postgresql/data
+      - pgdata:/var/lib/postgresql/data
+
     ports:
       - "${DB_PORT:-5432}:5432"
+
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-user} -d ${DB_NAME:-blogging_db}"]
       interval: 5s
       timeout: 5s
       retries: 5
+
     networks:
       - tech_net
 
@@ -45,5 +55,4 @@ networks:
     driver: bridge
 
 volumes:
-  postech-fiap-etapa-2-master_pgdata:
-    external: true
+  pgdata:
